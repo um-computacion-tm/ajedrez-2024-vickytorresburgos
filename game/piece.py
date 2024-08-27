@@ -1,7 +1,7 @@
 class Piece:
-    def __init__(self,color,board):
+    def __init__(self,color):
         self.__color__ = color
-        self.__board__ = board
+        
         
 def __str__(self):
     if self.__color__ == "White":
