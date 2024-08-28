@@ -1,12 +1,16 @@
 from game.chess import Chess
+from game.board import Board
 
 class RangeError(Exception):
     pass
 
 def main():
+    board = Board()
+    print(board)
     chess = Chess()
     while chess.is_playing():
         play(chess)
+    
 
 def play(chess):
     try:
@@ -39,6 +43,6 @@ def play(chess):
 def validate_input(value):
     if value < 1 or value > 8:
         raise RangeError
-   
+
 if __name__ == '__main__':
     main()
