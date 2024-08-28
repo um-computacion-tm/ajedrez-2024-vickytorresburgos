@@ -1,5 +1,6 @@
 import unittest
 from game.piece import Piece
+from game.board import Board
 
 class TestPiece(unittest.TestCase):
     def test_SetUp(self):
