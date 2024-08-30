@@ -13,22 +13,37 @@ class TestBoard(unittest.TestCase):
         self.assertIsInstance(self.board.get_piece(7, 7), Rook)
 
     def test_empty_positions(self):
-        self.assertIsNone(self.board.get_piece(1, 1))
-        self.assertIsNone(self.board.get_piece(6, 6))
+        self.assertIsNone(self.board.get_piece(2, 2))
+        self.assertIsNone(self.board.get_piece(3, 3))
         self.assertIsNone(self.board.get_piece(4, 4))
 
     def test_place_piece(self):
-        self.board.place_piece("White",0,0)
+        self.board.place_piece(0, 0, "White")  # Cambiado el orden
         self.assertIsInstance(self.board.get_piece(0, 0), str)
-        self.board.place_piece("White", 0, 7)
+        self.board.place_piece(0, 7, "White")
         self.assertIsInstance(self.board.get_piece(0, 7), str)
-        self.board.place_piece("Black", 7, 0)
+        self.board.place_piece(7, 0, "Black")
         self.assertIsInstance(self.board.get_piece(7, 0), str)
-        self.board.place_piece("Black", 7, 7)
+        self.board.place_piece(7, 7, "Black")
+        self.assertIsInstance(self.board.get_piece(7, 7), str)
         
+        
+    def test_str_board(self):
+        board = Board()
+        self.assertEqual(
+            str(board),
+            (
+                "♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ \n"
+                "♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟ \n"
+                "                \n"
+                "                \n"
+                "                \n"
+                "                \n"
+                "♙ ♙ ♙ ♙ ♙ ♙ ♙ ♙ \n"
+                "♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖ \n"
+            )
+        )
 
-
-
- 
+        
 if __name__ == "__main__":
     unittest.main()

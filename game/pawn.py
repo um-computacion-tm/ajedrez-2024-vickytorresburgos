@@ -1,5 +1,8 @@
 from game.piece import Piece
 
 class Pawn(Piece):
-        white_str = "♙"
-        black_str = "♟"
+    def white_str(self):
+        return "♙"
+
+    def black_str(self):
+        return "♟"
