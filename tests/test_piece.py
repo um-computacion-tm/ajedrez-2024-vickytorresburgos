@@ -4,7 +4,7 @@ from game.board import Board
 
 class TestPiece(unittest.TestCase):
     def test_SetUp(self):
-        piece = Piece("White")
+        piece = Piece("White",self)
         self.assertEqual(piece.__color__,"White")
 
 if __name__ == "__main__":
