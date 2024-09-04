@@ -5,10 +5,13 @@ from game.queen import Queen
 from game.king import King
 from game.pawn import Pawn
 
-class InvalidMoveException(Exception):
+class InvalidMove(Exception):
     pass
 
 class InvalidCoordException(Exception):
+    pass
+
+class OutOfBoard(Exception):
     pass
 
 class Board:
@@ -53,10 +56,19 @@ class Board:
         return board_str  
     
     def get_piece(self, row, col):
+        if not (
+            0 <= row < 8 or 0 <= col < 8
+        ):
+            raise OutOfBoard()
         return self.__positions__[row][col]
     
     def place_piece(self, row, col, piece):
         self.__positions__[row][col] = piece
+
+    def move(self, from_row, from_col, to_row, to_col):
+        origin = self.get_piece(from_row, from_col)
+        self.place_piece(to_row, to_col, origin)
+        self.place_piece(from_row, from_col, None)
 
 
 
