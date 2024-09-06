@@ -14,3 +14,7 @@ class Piece:
             return self.white_str()
         else:
             return self.black_str()
+
+    def get_color(self):
+        return self.__color__
+    
