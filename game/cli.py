@@ -41,7 +41,7 @@ def play(chess):
         print('Coords out of range. Please try again')
         
 def validate_input(value):
-    if value < 1 or value > 8:
+    if value < 0 or value > 7:
         raise RangeError
 
 if __name__ == '__main__':

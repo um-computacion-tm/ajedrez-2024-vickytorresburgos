@@ -12,7 +12,8 @@ class InvalidCoordException(Exception):
     pass
 
 class OutOfBoard(Exception):
-    pass
+    message = "La posicion indicada se encuentra fuera del tablero"
+
 
 class Board:
     def __init__(self, for_test = False):
