@@ -44,33 +44,6 @@ class TestBoard(unittest.TestCase):
             )
         )
 
-    # def test_move(self):
-    #     board = Board(for_test=True)
-    #     rook = Rook(color='Black', board=board)
-    #     board.place_piece(0, 0, rook)
-    #     board.move(
-    #         from_row=0,
-    #         from_col=0,
-    #         to_row=0,
-    #         to_col=1,
-    #     )
-    #     self.assertIsInstance(
-    #         board.get_piece(0, 1),
-    #         Rook,
-    #     )
-    #     self.assertEqual(
-    #         str(board),
-    #         (
-    #             " ♜      \n"
-    #             "        \n"
-    #             "        \n"
-    #             "        \n"
-    #             "        \n"
-    #             "        \n"
-    #             "        \n"
-    #             "        \n"
-    #         )
-    #     )
 
     def test_get_piece_out_of_range(self):
         board = Board(for_test=True)

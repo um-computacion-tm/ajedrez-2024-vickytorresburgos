@@ -23,10 +23,7 @@ class TestRook(unittest.TestCase):
         rook = Rook("White", board)
         board.place_piece(4, 4, rook)  
         possibles = rook.possible_positions_vd(4, 4)
-        self.assertEqual(
-            possibles,
-            [(5, 4), (6, 4), (7, 4)]
-        )
+        self.assertEqual(possibles,[(5, 4), (6, 4), (7, 4)])
 
     def test_move_vertical_desc_opponent(self):
         board = Board(for_test=True)
@@ -35,10 +32,7 @@ class TestRook(unittest.TestCase):
         opponent_piece = Pawn("Black", board)
         board.place_piece(5, 4, opponent_piece)  
         possibles = rook.possible_positions_vd(4, 4)
-        self.assertEqual(
-            possibles,
-            [(5, 4)]
-        )
+        self.assertEqual(possibles,[(5, 4)])
 
     def test_move_vertical_desc_ally(self):
         board = Board(for_test=True)
@@ -47,19 +41,14 @@ class TestRook(unittest.TestCase):
         ally_piece = Pawn("White", board)
         board.place_piece(5, 4, ally_piece)  
         possibles = rook.possible_positions_vd(4, 4)
-        self.assertEqual(
-            possibles,
-            []
-        )
+        self.assertEqual(possibles,[])
 
     def test_move_vertical_asc_empty(self):
         board = Board(for_test=True)
         rook = Rook("White", board)
         board.place_piece(4, 4, rook)  
         possibles = rook.possible_positions_va(4, 4)
-        self.assertEqual(
-            possibles,
-            [(3, 4), (2, 4), (1, 4), (0, 4)]
+        self.assertEqual(possibles,[(3, 4), (2, 4), (1, 4), (0, 4)]
         )
 
     def test_move_vertical_asc_opponent(self):
