@@ -65,7 +65,7 @@ class TestCli(unittest.TestCase):
         chess = Chess()
         self.assertEqual(validate_input(1), None)
         self.assertEqual(validate_input(5), None)
-        self.assertEqual(validate_input(8), None)
+        self.assertEqual(validate_input(7), None)
 
     def test_invalid_range_input(self):
         chess = Chess()
