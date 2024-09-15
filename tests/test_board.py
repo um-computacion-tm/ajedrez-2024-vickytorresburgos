@@ -53,6 +53,19 @@ class TestBoard(unittest.TestCase):
             exc.exception.message,
             "La posicion indicada se encuentra fuera del tablero"
         )
+
+    def test_move_piece(self):
+            rook = Rook("Black", self.board)
+            self.board.place_piece(0, 0, rook)
+            self.board.move(0, 0, 1, 1)
+            self.assertIsNone(self.board.get_piece(0, 0))
+            self.assertEqual(self.board.get_piece(1, 1), rook)
+
+    def test_move_out_of_board(self):
+        rook = Rook("Black", self.board)
+        self.board.place_piece(0, 0, rook)
+        with self.assertRaises(OutOfBoard):
+            self.board.move(0, 0, 8, 8)        
         
 if __name__ == "__main__":
     unittest.main()
