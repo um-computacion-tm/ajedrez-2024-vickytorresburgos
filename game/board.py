@@ -63,15 +63,12 @@ class Board:
             raise OutOfBoard()
         return self.__positions__[row][col]
     
-    def place_piece(self, row, col, piece):
+    def place_piece(self, row, col, piece):    
         self.__positions__[row][col] = piece
 
     def move(self, from_row, from_col, to_row, to_col):
-        if not (0 <= to_row < 8 and 0 <= to_col < 8):
-            raise OutOfBoard()
         origin = self.get_piece(from_row, from_col)
         self.place_piece(to_row, to_col, origin)
+        destination = self.get_piece(to_row, to_col)
         self.place_piece(from_row, from_col, None)
-
-
 
