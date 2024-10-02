@@ -1,9 +1,9 @@
 import unittest
 from game.board import Board
-from game.chess import Chess, EmptyPosition, InvalidDestination, InvalidTurn, OutOfBoard
+from game.chess import Chess
+from game.exceptions import EmptyPosition, InvalidDestination, InvalidTurn, OutOfBoard
 from game.pawn import Pawn
 from game.player import Player
-from game.rook import Rook
 
 class TestChess(unittest.TestCase):
     def setUp(self):
@@ -41,17 +41,50 @@ class TestChess(unittest.TestCase):
 
     def test_validate_move_invalid_destination(self):
         with self.assertRaises(InvalidDestination):
-            self.chess.validate_move(6, 0, 6, 1)
+            self.chess.validate_move(6, 0, 7, 1)
+
+    def test_get_player_white(self):
+        white_player = self.chess.get_player(0)
+        self.assertEqual(white_player.color, "White")
+
+    def test_get_player_black(self):
+        black_player = self.chess.get_player(1)
+        self.assertEqual(black_player.color, "Black")
 
     def test_move(self):
-        self.chess.move(6, 0, 5, 0)
-        self.assertEqual(self.chess.actual_player.color, "White")
+        self.assertEqual(self.chess.actual_player.color, "Black")
+        self.chess.move(0, 0, 5, 0)
+
+    def test_show_board_initial_state(self):
+        expected_board_str = (
+            "♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ \n"
+            "♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟ \n"
+            "                \n"
+            "                \n"
+            "                \n"
+            "                \n"
+            "♙ ♙ ♙ ♙ ♙ ♙ ♙ ♙ \n"
+            "♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖ \n"
+        )
+        self.assertEqual(self.chess.show_board, expected_board_str)
 
     def test_change_turn(self):
         self.chess.change_turn()
         self.assertEqual(self.chess.actual_player.color, "Black")
         self.chess.change_turn()
-        self.assertEqual(self.chess.actual_player.color, "White")        
+        self.assertEqual(self.chess.actual_player.color, "White") 
+
+    def test_change_turn_white_to_black(self):
+        self.assertEqual(self.chess.actual_player.color, "White")
+        self.chess.change_turn()
+        self.assertEqual(self.chess.actual_player.color, "Black")
+    
+    def test_change_turn_black_to_white(self):
+        self.chess.change_turn()
+        self.assertEqual(self.chess.actual_player.color, "Black")
+        self.chess.change_turn()
+        self.assertEqual(self.chess.actual_player.color, "White") 
+
 
 if __name__ == "__main__":
     unittest.main()
