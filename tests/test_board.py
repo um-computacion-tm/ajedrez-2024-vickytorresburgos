@@ -1,10 +1,12 @@
 import unittest
-from game.board import Board,OutOfBoard
+from game.chess import Chess
+from game.board import Board
+from game.exceptions import OutOfBoard
 from game.rook import Rook
 
 class TestBoard(unittest.TestCase):
     def setUp(self):
-        self.board = Board(for_test=True)
+        self.board = Board()
 
     def test_initial_position(self):
         self.assertIsInstance(self.board.get_piece(0, 0), Rook) 
@@ -56,17 +58,17 @@ class TestBoard(unittest.TestCase):
         )
 
     def test_move_piece(self):
-            rook = Rook("Black", self.board, 5)
-            self.board.place_piece(0, 0, rook)
-            self.board.move(0, 0, 1, 1)
-            self.assertIsNone(self.board.get_piece(0, 0))
-            self.assertEqual(self.board.get_piece(1, 1), rook)
-
-    def test_move_out_of_board(self):
         rook = Rook("Black", self.board, 5)
         self.board.place_piece(0, 0, rook)
+        self.board.move(0, 0, 1, 1)
+        self.assertIsNone(self.board.get_piece(0, 0))
+        self.assertEqual(self.board.get_piece(1, 1), rook)
+
+    def test_move_out_of_board(self):
+        chess = Chess()
+        chess.__board__.place_piece(0, 0, Rook("Black", self.board, 5))
         with self.assertRaises(OutOfBoard):
-            self.board.move(0, 0, 8, 8)       
+            chess.validate_move(0, 0, 8, 8) 
         
 if __name__ == "__main__":
     unittest.main()
