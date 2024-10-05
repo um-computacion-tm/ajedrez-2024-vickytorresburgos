@@ -4,6 +4,7 @@ from game.chess import Chess
 from game.exceptions import EmptyPosition, InvalidDestination, InvalidTurn, OutOfBoard
 from game.pawn import Pawn
 from game.player import Player
+from game.rook import Rook
 
 class TestChess(unittest.TestCase):
     def setUp(self):
@@ -52,8 +53,12 @@ class TestChess(unittest.TestCase):
         self.assertEqual(black_player.color, "Black")
 
     def test_move(self):
+        self.assertEqual(self.chess.actual_player.color, "White")  
+        self.chess.move(6, 1, 5, 1) 
+        self.assertIsNone(self.chess.__board__.get_piece(6, 1))
+        self.assertIsInstance(self.chess.__board__.get_piece(5, 1), Pawn)
+        self.chess.change_turn()
         self.assertEqual(self.chess.actual_player.color, "Black")
-        self.chess.move(0, 0, 5, 0)
 
     def test_show_board_initial_state(self):
         expected_board_str = (
@@ -66,7 +71,7 @@ class TestChess(unittest.TestCase):
             "♙ ♙ ♙ ♙ ♙ ♙ ♙ ♙ \n"
             "♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖ \n"
         )
-        self.assertEqual(self.chess.show_board, expected_board_str)
+        self.assertEqual(self.chess.show_board(), expected_board_str)
 
     def test_change_turn(self):
         self.chess.change_turn()

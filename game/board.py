@@ -8,7 +8,7 @@ from game.exceptions import OutOfBoard
 
 
 class Board:
-    def __init__(self, for_test = False):
+    def __init__(self,for_test = False):
         self.__positions__ = []
         for _ in range(8):
             col = []
@@ -50,12 +50,14 @@ class Board:
     
     def get_piece(self, row, col):
         if not (
-            0 <= row < 8 or 0 <= col < 8
+            0 <= row < 8 and 0 <= col < 8
         ):
             raise OutOfBoard()
         return self.__positions__[row][col]
     
-    def place_piece(self, row, col, piece):    
+    def place_piece(self, row, col, piece):
+        if not (0 <= row < 8 and 0 <= col < 8):
+            raise OutOfBoard()  # Verifica si las coordenadas son válidas
         self.__positions__[row][col] = piece
 
     def move(self, from_row, from_col, to_row, to_col):
