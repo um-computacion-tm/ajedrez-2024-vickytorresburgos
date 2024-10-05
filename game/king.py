@@ -6,3 +6,4 @@ class King(Piece):
 
     def black_str(self):
         return "♚"
+    

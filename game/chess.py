@@ -43,9 +43,8 @@ class Chess:
         if isinstance(origin_piece,Pawn) and from_col != to_col:
             if not destination_piece:
                 raise InvalidPawnMovement()
-            
-        # Verificar que no haya una ficha en el medio entre el origen y el destino
-        if not isinstance(origin_piece, Knight):  # El caballo puede saltar
+        
+        if not isinstance(origin_piece, Knight):  
             direction = (to_row - from_row, to_col - from_col)
             steps = max(abs(direction[0]), abs(direction[1]))
             for i in range(1, steps):

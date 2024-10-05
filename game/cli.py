@@ -1,48 +1,35 @@
 from game.chess import Chess
-from game.board import Board
-
-class RangeError(Exception):
-    pass
+from game.exceptions import EmptyPosition, InvalidDestination, InvalidMove, InvalidPawnMovement, InvalidTurn, OutOfBoard, PathBlocked
 
 def main():
-    board = Board()
-    print(board)
     chess = Chess()
+    print("Starting Chess Game!!!")
     while chess.is_playing():
+        print(chess.show_board())
+        print(f"Actual Turn: {chess.actual_player.color}")  # Imprime el turno antes de jugar
         play(chess)
+        chess.change_turn()
     
+    # le tiene que preguntar en cada ronda al jugador si quiere seguir jugando? 
+    # ver puntuacion
 
 def play(chess):
-    try:
-        print("turn: ", chess.turn)
-        from_row = int(input('From row: '))
-        validate_input(from_row)
+    while True:
+        try:
+            from_row = int(input('From row: ')) - 1
+            from_col = int(input('From col: ')) - 1
+            to_row = int(input('To row: ')) - 1
+            to_col = int(input('To col: ')) - 1
+            chess.move(from_row, from_col, to_row, to_col)
+            break
+
+        except ValueError:
+            print('Unexpected input. Please try again')
         
-        from_col = int(input('From col: '))
-        validate_input(from_col)
-
-        to_row = int(input('To row: '))
-        validate_input(to_row)
-
-        to_col = int(input('To col: '))
-        validate_input(to_col)
-
-        chess.move(
-            from_row,
-            from_col,
-            to_row,
-            to_col,
-        ) 
-    
-    except ValueError:
-        print('Unexpected input. Please try again')
-    
-    except RangeError:
-        print('Coords out of range. Please try again')
-        
-def validate_input(value):
-    if value < 0 or value > 7:
-        raise RangeError
+        except (OutOfBoard, EmptyPosition, InvalidDestination, InvalidTurn, InvalidMove, PathBlocked, InvalidPawnMovement) as e:
+                print(e.message) 
+                print('Try again.')
+                print(chess.show_board())  
 
 if __name__ == '__main__':
     main()

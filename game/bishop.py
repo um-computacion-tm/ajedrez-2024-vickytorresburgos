@@ -9,8 +9,6 @@ class Bishop(Piece):
     
     def possible_positions(self, row, col):
         possibles = []
-
-        # Direcciones diagonales: (up_right, up_left, down_right, down_left)
         directions = [(-1, 1), (-1, -1), (1, 1), (1, -1)]
 
         for dr, dc in directions:
