@@ -2,17 +2,29 @@ import unittest
 from game.piece import Piece
 
 class TestPiece(unittest.TestCase):
-    def test_SetUp(self):
-        piece = Piece("White",self)
-        self.assertEqual(piece.__color__,"White")
+    def setUp(self):
+        self.board = None  
+        self.white_piece = Piece("White", self.board, 1)
+        self.black_piece = Piece("Black", self.board, 2)
 
-    def test_white_str(self):
-        piece = Piece("White",self)
-        self.assertEqual(str(piece),"")
+    def test_initialization(self):
+        self.assertEqual(self.white_piece.get_color(), "White")
+        self.assertEqual(self.white_piece.get_score(), 1)
+        self.assertEqual(self.black_piece.get_color(), "Black")
+        self.assertEqual(self.black_piece.get_score(), 2)
 
-    def test_black_str(self):
-        piece = Piece("Black",self)
-        self.assertEqual(str(piece),"")
+    def test_str_representation(self):
+        self.assertEqual(str(self.white_piece), "")  
+        self.assertEqual(str(self.black_piece), "")  
+
+    def test_get_color(self):
+        self.assertEqual(self.white_piece.get_color(), "White")
+        self.assertEqual(self.black_piece.get_color(), "Black")
+
+    def test_get_score(self):
+        self.assertEqual(self.white_piece.get_score(), 1)
+        self.assertEqual(self.black_piece.get_score(), 2)
+
 
 if __name__ == "__main__":
     unittest.main()

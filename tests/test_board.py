@@ -1,5 +1,7 @@
 import unittest
-from game.board import Board,OutOfBoard
+from game.chess import Chess
+from game.board import Board
+from game.exceptions import OutOfBoard
 from game.rook import Rook
 
 class TestBoard(unittest.TestCase):
@@ -12,13 +14,14 @@ class TestBoard(unittest.TestCase):
         self.assertIsInstance(self.board.get_piece(7, 0), Rook)
         self.assertIsInstance(self.board.get_piece(7, 7), Rook)
 
+
     def test_empty_positions(self):
         self.assertIsNone(self.board.get_piece(2, 2))
         self.assertIsNone(self.board.get_piece(3, 3))
         self.assertIsNone(self.board.get_piece(4, 4))
 
     def test_place_piece(self):
-        self.board.place_piece(0, 0, "White")  # Cambiado el orden
+        self.board.place_piece(0, 0, "White")
         self.assertIsInstance(self.board.get_piece(0, 0), str)
         self.board.place_piece(0, 7, "White")
         self.assertIsInstance(self.board.get_piece(0, 7), str)
@@ -51,8 +54,41 @@ class TestBoard(unittest.TestCase):
             board.get_piece(10, 10)
         self.assertEqual(
             exc.exception.message,
-            "La posicion indicada se encuentra fuera del tablero"
+            "The position selected is out of the board"
         )
+
+    def test_move_piece(self):
+        rook = Rook("Black", self.board, 5)
+        self.board.place_piece(0, 0, rook)
+        self.board.move(0, 0, 1, 1)
+        self.assertIsNone(self.board.get_piece(0, 0))
+        self.assertEqual(self.board.get_piece(1, 1), rook)
+
+    def test_move_out_of_board(self):
+        chess = Chess()
+        chess.__board__.place_piece(0, 0, Rook("Black", self.board, 5))
+        with self.assertRaises(OutOfBoard):
+            chess.validate_move(0, 0, 8, 8) 
+
+    def test_place_piece_valid_position(self):
+        rook = Rook(color='white', board=self.board, score=5)  # Crear una pieza Rook
+        self.board.place_piece(0, 0, rook)  # Colocar el Rook en (0, 0)
+        self.assertEqual(self.board.get_piece(0, 0), rook)  # Verificar que se haya colocado correctamente
+
+    def test_place_piece_invalid_position(self):
+        rook = Rook(color='white', board=self.board, score=5)
+        
+        with self.assertRaises(OutOfBoard):  # Verificar que se lance la excepción
+            self.board.place_piece(-1, 0, rook)  # Intentar colocar fuera del tablero
+
+        with self.assertRaises(OutOfBoard):  
+            self.board.place_piece(8, 8, rook)  # Intentar colocar fuera del tablero
+
+        with self.assertRaises(OutOfBoard):  
+            self.board.place_piece(0, -1, rook)  # Intentar colocar fuera del tablero
+
+        with self.assertRaises(OutOfBoard):  
+            self.board.place_piece(0, 8, rook)  # I
         
 if __name__ == "__main__":
     unittest.main()

@@ -7,8 +7,8 @@ from game.pawn import Pawn
 class TestBishopMovements(unittest.TestCase):
     def test_move_diagonal_empty(self):
         board = Board(for_test=True)
-        bishop = Bishop("White", board)
-        board.place_piece(4, 4, bishop)  # Coloca el alfil en la posición (4, 4)
+        bishop = Bishop("White", board,3)
+        board.place_piece(4, 4, bishop)  
         possibles = bishop.possible_positions(4, 4)
         self.assertEqual(
             possibles,
@@ -17,10 +17,10 @@ class TestBishopMovements(unittest.TestCase):
 
     def test_move_diagonal_opponent(self):
         board = Board(for_test=True)
-        bishop = Bishop("White", board)
-        board.place_piece(4, 4, bishop)  # Coloca el alfil en la posición (4, 4)
-        opponent_piece = Pawn("Black", board)
-        board.place_piece(3, 5, opponent_piece)  # Coloca un peón negro en (3, 5)
+        bishop = Bishop("White", board,3)
+        board.place_piece(4, 4, bishop)  
+        opponent_piece = Pawn("Black", board,1)
+        board.place_piece(3, 5, opponent_piece)  
         possibles = bishop.possible_positions(4, 4)
         self.assertEqual(
             possibles,
@@ -29,10 +29,10 @@ class TestBishopMovements(unittest.TestCase):
 
     def test_move_diagonal_ally(self):
         board = Board(for_test=True)
-        bishop = Bishop("White", board)
-        board.place_piece(4, 4, bishop)  # Coloca el alfil en la posición (4, 4)
-        ally_piece = Pawn("White", board)
-        board.place_piece(3, 5, ally_piece)  # Coloca un peón blanco en (3, 5)
+        bishop = Bishop("White", board,3)
+        board.place_piece(4, 4, bishop) 
+        ally_piece = Pawn("White", board,1)
+        board.place_piece(3, 5, ally_piece) 
         possibles = bishop.possible_positions(4, 4)
         self.assertEqual(
             possibles,
