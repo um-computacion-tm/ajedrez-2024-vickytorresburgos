@@ -69,6 +69,26 @@ class TestBoard(unittest.TestCase):
         chess.__board__.place_piece(0, 0, Rook("Black", self.board, 5))
         with self.assertRaises(OutOfBoard):
             chess.validate_move(0, 0, 8, 8) 
+
+    def test_place_piece_valid_position(self):
+        rook = Rook(color='white', board=self.board, score=5)  # Crear una pieza Rook
+        self.board.place_piece(0, 0, rook)  # Colocar el Rook en (0, 0)
+        self.assertEqual(self.board.get_piece(0, 0), rook)  # Verificar que se haya colocado correctamente
+
+    def test_place_piece_invalid_position(self):
+        rook = Rook(color='white', board=self.board, score=5)
+        
+        with self.assertRaises(OutOfBoard):  # Verificar que se lance la excepción
+            self.board.place_piece(-1, 0, rook)  # Intentar colocar fuera del tablero
+
+        with self.assertRaises(OutOfBoard):  
+            self.board.place_piece(8, 8, rook)  # Intentar colocar fuera del tablero
+
+        with self.assertRaises(OutOfBoard):  
+            self.board.place_piece(0, -1, rook)  # Intentar colocar fuera del tablero
+
+        with self.assertRaises(OutOfBoard):  
+            self.board.place_piece(0, 8, rook)  # I
         
 if __name__ == "__main__":
     unittest.main()
