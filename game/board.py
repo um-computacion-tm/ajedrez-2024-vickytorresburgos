@@ -42,9 +42,9 @@ class Board:
             row_str = ''
             for piece in row:
                 if piece is None:
-                    row_str += '  '  # Espacio para una casilla vacía
+                    row_str += '  ' 
                 else:
-                    row_str += str(piece) + ' '  # Usamos el método __str__ de la pieza
+                    row_str += str(piece) + ' ' 
             board_str += row_str + '\n'
         return board_str  
     
@@ -57,7 +57,7 @@ class Board:
     
     def place_piece(self, row, col, piece):
         if not (0 <= row < 8 and 0 <= col < 8):
-            raise OutOfBoard()  # Verifica si las coordenadas son válidas
+            raise OutOfBoard()  
         self.__positions__[row][col] = piece
 
     def move(self, from_row, from_col, to_row, to_col):
