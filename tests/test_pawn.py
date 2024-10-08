@@ -96,7 +96,6 @@ class TestPawn(unittest.TestCase):
     @patch.object(Pawn, 'get_color', return_value='Black')
     @patch.object(Board, 'get_piece', return_value=Piece("White", None, 1))
     def test_possible_positions_diagonal_capture_black_pawn(self, mock_get_piece, mock_get_color):
-        # Test for a black pawn capturing a white piece diagonally
         self.board.place_piece(4, 4, self.black_pawn)
         possibles = self.black_pawn.possible_positions(4, 4)
         expected = [(5, 4), (5, 3), (5, 5)]

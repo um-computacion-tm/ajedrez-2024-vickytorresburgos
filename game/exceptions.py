@@ -7,12 +7,12 @@ class InvalidCoordException(InvalidMove):
     message = "Invalid coordinates provided"
 
 
-class InvalidTurn(InvalidMove): #falta testear
+class InvalidTurn(InvalidMove): 
     message="Invalid Turn. You cannot move your opponent's pieces"
 
 
 class EmptyPosition(InvalidMove):
-    message="The position is empty" #falta testear
+    message="The position is empty"
 
 
 class OutOfBoard(InvalidMove):
@@ -22,9 +22,9 @@ class OutOfBoard(InvalidMove):
 class InvalidDestination(InvalidMove):
     message="The destination selected contains a piece of your own. Try again"
 
-class PathBlocked(InvalidMove): #falta testear
+class PathBlocked(InvalidMove): 
     message="There is a piece blocking the path"
 
 
 class InvalidPawnMovement(InvalidMove):
-    message="The pawn can only make a diagonal move to eat an opponents' piece" #falta testear
+    message="The pawn can only make a diagonal move to eat an opponents' piece" 

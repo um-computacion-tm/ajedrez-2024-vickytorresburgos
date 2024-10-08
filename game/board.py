@@ -48,14 +48,14 @@ class Board:
             board_str += row_str + '\n'
         return board_str  
     
-    def get_piece(self, row, col):
+    def get_piece(self, row, col): #codigo duplicado
         if not (
             0 <= row < 8 and 0 <= col < 8
         ):
             raise OutOfBoard()
         return self.__positions__[row][col]
     
-    def place_piece(self, row, col, piece):
+    def place_piece(self, row, col, piece): #codigo duplicados
         if not (0 <= row < 8 and 0 <= col < 8):
             raise OutOfBoard()  
         self.__positions__[row][col] = piece
