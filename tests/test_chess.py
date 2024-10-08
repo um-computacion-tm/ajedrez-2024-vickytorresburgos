@@ -111,7 +111,48 @@ class TestChess(unittest.TestCase):
         with self.assertRaises(InvalidPawnMovement):
             self.chess.validate_move(0, 0, 1, 1)
 
+    def test_rook_invalid_move(self):
+        chess = Chess()
+        board = Board(for_test=True)
+        self.chess.__board__.place_piece(1,1,Rook('White', board, 5))
+        self.chess.__board__.get_piece(1,1)
+        with self.assertRaises(InvalidMove):
+            self.chess.validate_move(1,1,2,2)
 
+    def test_path_blocked(self):
+        chess = Chess()
+        board = Board(for_test = False)
+        self.chess.__board__.get_piece(7,0)
+        with self.assertRaises(PathBlocked):
+            self.chess.validate_move(7,0,5,0)
 
+    def test_valid_move(self):
+        chess = Chess()
+        board = Board(for_test = False)
+        chess.move(6, 0, 4, 0)
+        piece = chess.__board__.get_piece(4,0)
+        self.assertIsInstance(piece,Pawn)
+
+    @patch.object(Chess, 'validate_move', return_value=[])
+    def test_sum_score(self, mock_validate_move):
+        chess = Chess()
+        board = Board(for_test = True)
+        self.chess.__board__.place_piece(0,0,Pawn('White', board, 1))
+        self.chess.__board__.place_piece(1,1,Pawn('Black', board, 1))
+        self.chess.move(0, 0, 1, 1)
+        self.assertEqual(self.chess.get_player(0).score, 1)
+        self.assertEqual(self.chess.get_player(1).pieces, 15)
+
+    @patch.object(Chess, 'validate_move', return_value = [])
+    def test_remove_piece(self, mock_validate_move):
+        chess = Chess()
+        board = Board(for_test = True)
+        self.chess.__board__.place_piece(0,0,Pawn('Black', board, 1))
+        self.chess.__board__.place_piece(1,1,Pawn('White', board, 1))
+        self.chess.change_turn()
+        self.chess.move(0, 0, 1, 1)
+        self.assertEqual(self.chess.get_player(1).score, 1)
+        self.assertEqual(self.chess.get_player(0).pieces, 15)
+    
 if __name__ == "__main__":
     unittest.main()

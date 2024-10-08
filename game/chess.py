@@ -37,37 +37,36 @@ class Chess:
         
         possible_positions = origin_piece.possible_positions(from_row, from_col) 
         if (to_row, to_col) not in possible_positions:
-            raise InvalidMove() # falta testear
+            raise InvalidMove() 
         
         if isinstance(origin_piece,Pawn) and from_col != to_col: 
             if not destination_piece: 
                 raise InvalidPawnMovement() 
         
-        if not isinstance(origin_piece, Knight):  #falta testear
+        if not isinstance(origin_piece, Knight):  
             direction = (to_row - from_row, to_col - from_col)
             steps = max(abs(direction[0]), abs(direction[1]))
             for i in range(1, steps):
-                intermediate_row = from_row + (direction[0] * i // steps) # falta testear
-                intermediate_col = from_col + (direction[1] * i // steps) # falta testear
-                if self.__board__.get_piece(intermediate_row, intermediate_col) is not None: # falta testear
-                    raise PathBlocked() # falta testear
+                intermediate_row = from_row + (direction[0] * i // steps) 
+                intermediate_col = from_col + (direction[1] * i // steps) 
+                if self.__board__.get_piece(intermediate_row, intermediate_col) is not None: 
+                    raise PathBlocked() 
                 
-            
     def get_player(self,index): 
         return self.players[index]     
     
     def move(self,from_row,from_col, to_row, to_col):
-        self.validate_move(from_row, from_col, to_row, to_col) # falta testear
-        destination = self.__board__.get_piece(to_row, to_col) # falta testear
-        self.__board__.move(from_row, from_col, to_row, to_col) # falta testear
+        self.validate_move(from_row, from_col, to_row, to_col) 
+        destination = self.__board__.get_piece(to_row, to_col) 
+        self.__board__.move(from_row, from_col, to_row, to_col) 
 
-        if destination: # falta testear
+        if destination: 
             self.actual_player.sum_score(destination.get_score()) # falta testear
             if self.actual_player == self.get_player(1): # falta testear
                 self.get_player(0).remove_piece() # falta testear
             else: # falta testear
                 self.get_player(1).remove_piece() # falta testear
-        self.change_turn() # falta testear
+        self.change_turn() 
         
 
     def show_board(self):
