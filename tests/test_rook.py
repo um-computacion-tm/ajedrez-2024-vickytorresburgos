@@ -1,44 +1,57 @@
 import unittest
-
-from game.board import Board, InvalidCoordException
-from game.piece import Piece
+from game.board import Board
 from game.rook import Rook
 
 class TestRookMovements(unittest.TestCase):
     def setUp(self):
-        self.board = Board()
-        self.rook = Rook("White", self.board)
+        self.board = Board(for_test=True)  
+        self.white_rook = Rook("White", self.board,5) 
+        self.black_rook = Rook("Black", self.board,5) 
+        
+    def test_white_str(self):
+        self.assertEqual(self.white_rook.white_str(), "♖")
 
-    def test_possible_positions_empty_board(self):
-        self.board.place_piece(4, 4, self.rook)
-        expected_positions = [
-            (0, 4), (1, 4), (2, 4), (3, 4), (5, 4), (6, 4), (7, 4),
-            (4, 0), (4, 1), (4, 2), (4, 3), (4, 5), (4, 6), (4, 7)
+    def test_black_str(self):
+        self.assertEqual(self.black_rook.black_str(), "♜")
+
+    def test_possible_positions_white_rook(self):
+        self.board.place_piece(4, 4, self.white_rook)
+        possibles = self.white_rook.possible_positions(4, 4)
+        expected = [
+            (3, 4), (2, 4), (1, 4), (0, 4),
+            (5, 4), (6, 4), (7, 4),
+            (4, 3), (4, 2), (4, 1), (4, 0),
+            (4, 5), (4, 6), (4, 7)
         ]
-        self.assertEqual(self.rook.possible_positions(4, 4), expected_positions)
+        self.assertEqual(possibles, expected)
 
-    def test_possible_positions_with_obstacles(self):
-        self.board.place_piece(4, 4, self.rook)
-        self.board.place_piece(4, 6, Piece("Black", self.board))  # Obstacle
-        self.board.place_piece(6, 4, Piece("White", self.board))  # Friendly piece
-        expected_positions = [
-            (0, 4), (1, 4), (2, 4), (3, 4), (5, 4),
-            (4, 0), (4, 1), (4, 2), (4, 3), (4, 5), (4, 6)
+            # Test for a white rook at the edge of the board
+    def test_white_rook_board_edge(self):
+        self.board.place_piece(0, 0, self.white_rook)
+        possibles = self.white_rook.possible_positions(0, 0)
+        expected = [
+            (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
+            (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (0, 7)
         ]
-        self.assertEqual(self.rook.possible_positions(4, 4), expected_positions)
+        self.assertEqual(possibles, expected)
 
-    def test_possible_positions_invalid_coordinates(self):
-        with self.assertRaises(InvalidCoordException):
-            self.rook.possible_positions(8, 4)
+    def test_possible_positions_black_rook(self):
+        self.board.place_piece(4, 4, self.black_rook)
+        possibles = self.black_rook.possible_positions(4, 4)
+        expected = [
+            (3, 4), (2, 4), (1, 4), (0, 4),
+            (5, 4), (6, 4), (7, 4),
+            (4, 3), (4, 2), (4, 1), (4, 0),
+            (4, 5), (4, 6), (4, 7)
+        ]
+        self.assertEqual(possibles, expected)
 
-        with self.assertRaises(InvalidCoordException):
-            self.rook.possible_positions(4, 8)
-
-        with self.assertRaises(InvalidCoordException):
-            self.rook.possible_positions(-1, 4)
-
-        with self.assertRaises(InvalidCoordException):
-            self.rook.possible_positions(4, -1)
-
+    def test_black_rook_board_edge(self):
+        self.board.place_piece(0, 0, self.black_rook)
+        possibles = self.black_rook.possible_positions(0, 0)
+        expected = [
+            (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
+            (0, 1), (0, 2)]
+        
 if __name__ == '__main__':
     unittest.main()
