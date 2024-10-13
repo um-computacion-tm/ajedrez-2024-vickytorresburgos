@@ -19,5 +19,3 @@ class King(Piece):
         # """
         return "♚"
 
-    def get_directions(self):
-        return [(-1, 0), (1, 0), (0, -1), (0, 1),(-1, 1), (-1, -1), (1, 1), (1, -1)]
