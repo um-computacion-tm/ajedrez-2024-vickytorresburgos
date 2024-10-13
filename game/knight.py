@@ -19,5 +19,3 @@ class Knight(Piece):
         # """
         return "♞"
 
-    def get_directions(self):
-        return  [(-2, 1), (-2, -1), (2, 1), (2, -1),(1, 2), (-1, 2), (1, -2), (-1, -2)]
