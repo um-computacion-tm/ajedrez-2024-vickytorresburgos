@@ -4,7 +4,6 @@ from game.knight import Knight
 from game.pawn import Pawn
 from game.player import Player
 from game.king import King
-from game.rook import Rook
 from game.queen import Queen
 from game.bishop import Bishop
 
@@ -19,17 +18,33 @@ class Chess:
         self.players = [Player("White"), Player("Black")]
         self.actual_player = self.players[0]
         self.__board__ = Board()
+        self.agreed_draw = False
 
     def is_playing(self): 
-
         """
-        Checks if the game is still in progress.
-
+        Checks if the game is still in progress based on the following conditions:
+        
+        1. A player has no pieces left.
+        2. Players decide to end the game by mutual agreement.
+        
         Returns:
             bool: True if the game is still in progress, False otherwise.
         """
+        for player in self.players:
+            if not player.has_pieces():
+                print(f"{player.color} has no pieces left. Game Over!")
+                return False
+        if self.agreed_draw:
+            print("Game ended by mutual agreement.")
+            return False
         return True
     
+    def end_game_by_agreement(self):
+            """
+            Allows players to end the game by mutual agreement.
+            """
+            self.agreed_draw = True
+
     def validate_move(self, from_row, from_col,to_row,to_col):
 
         """
@@ -149,9 +164,12 @@ class Chess:
                 self.get_player(0).remove_piece() 
             else: 
                 self.get_player(1).remove_piece() 
+
+        if not self.actual_player.has_pieces():
+            print(f"{self.actual_player.color} has no pieces left. Game Over!")
+        
         self.change_turn() 
         
-
     def show_board(self):
 
         """

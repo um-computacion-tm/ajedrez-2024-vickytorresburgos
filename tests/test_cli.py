@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 from game.chess import Chess
-from game.cli import play
+from game.cli import ask_to_finish, play
 from game.exceptions import EmptyPosition, InvalidDestination, InvalidMove, InvalidTurn, OutOfBoard, PathBlocked
 
 class TestCli(unittest.TestCase):
@@ -83,6 +83,24 @@ class TestCli(unittest.TestCase):
         mock_move.assert_called_once_with(0, 0, 2, 0)
         mock_print.assert_any_call("There is a piece blocking the path")
         mock_print.assert_any_call("Try again.")
+    
+    @patch('builtins.input', side_effect=['yes', 'yes'])
+    @patch('builtins.print')
+    def test_both_players_agree(self, mock_print, mock_input):
+        result = ask_to_finish(None)  
+        self.assertTrue(result)
+
+    @patch('builtins.input', side_effect=['no', 'yes'])
+    @patch('builtins.print')
+    def test_one_player_disagrees(self,mock_print, mock_input):
+        result = ask_to_finish(None)
+        self.assertFalse(result)
+
+    @patch('builtins.input', side_effect=['no', 'no'])
+    @patch('builtins.print')
+    def test_both_players_disagree(self, mock_print, mock_input):
+        result = ask_to_finish(None)
+        self.assertFalse(result)
 
 if __name__ == '__main__':
     unittest.main()

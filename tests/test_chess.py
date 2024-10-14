@@ -197,5 +197,34 @@ class TestChess(unittest.TestCase):
         self.assertEqual(positions, expected_positions)
         self.assertEqual(more_than_one_step, True)  
 
+    @patch.object(Player, 'has_pieces', return_value=True)
+    @patch('builtins.print')
+    def test_is_playing_with_pieces(self, mock_print, mock_has_pieces):
+        chess = Chess()
+        chess.agreed_draw = False  
+        result = chess.is_playing()
+        self.assertTrue(result)
+
+    @patch.object(Player, 'has_pieces', side_effect=[False, True])
+    @patch('builtins.print')
+    def test_is_playing_player_no_pieces(self, mock_print, mock_has_pieces):
+        chess = Chess()
+        chess.agreed_draw = False 
+        result = chess.is_playing()
+        self.assertFalse(result)
+
+    @patch.object(Player, 'has_pieces', return_value=True)
+    @patch('builtins.print')
+    def test_is_playing_with_agreed_draw(self,mock_print, mock_has_pieces):
+        chess = Chess()
+        chess.agreed_draw = True  
+        result = chess.is_playing()
+        self.assertFalse(result)
+
+    def test_end_game_by_agreement(self):
+        chess = Chess()
+        chess.end_game_by_agreement()
+        self.assertTrue(chess.agreed_draw)
+
 if __name__ == "__main__":
     unittest.main()
