@@ -4,7 +4,6 @@ from game.bishop import Bishop
 from game.queen import Queen
 from game.king import King
 from game.pawn import Pawn
-from game.exceptions import OutOfBoard
 
 
 class Board:
@@ -72,14 +71,13 @@ class Board:
                 board_str += "  └───┴───┴───┴───┴───┴───┴───┴───┘"
         return board_str
     
-    def get_piece(self, row, col): #codigo duplicado
+    def get_piece(self, row, col): 
         
         """
     Retrieves the piece at the specified position on the chessboard.
 
     This function checks if the given row and column indices are within the bounds of the chessboard.
-    If the indices are valid, it returns the piece at the specified position. If the indices are out of
-    bounds, it raises an OutOfBoard exception.
+    If the indices are valid, it returns the piece at the specified position. 
 
     Parameters:
         row (int): The row index of the position.
@@ -88,12 +86,10 @@ class Board:
     Returns:
         Piece: The piece at the specified position.
 
-    Raises:
-        OutOfBoard: If the row or column index is out of the bounds of the chessboard.
     """
         return self.__positions__[row][col]
     
-    def place_piece(self, row, col, piece): #codigo duplicados
+    def place_piece(self, row, col, piece): 
         """
     Places a piece at the specified position on the chessboard.
 

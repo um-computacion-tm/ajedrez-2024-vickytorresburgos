@@ -25,7 +25,6 @@ class TestRookMovements(unittest.TestCase):
         ]
         self.assertEqual(possibles, expected)
 
-            # Test for a white rook at the edge of the board
     def test_white_rook_board_edge(self):
         self.board.place_piece(0, 0, self.white_rook)
         possibles = self.white_rook.possible_positions(0, 0, [(-1, 0), (1, 0), (0, -1), (0, 1)], True)

@@ -30,34 +30,26 @@ class Chess:
         """
         return True
     
-    # el juego se termina si un jugador se queda sin fichas o si los jugadores 
-    # deciden terminar la partida de mutuo acuerdo
-    # -> si un jugador quiere terminar la partida, le tiene que preguntar al otro si tambien quiere terminarla?
-
     def validate_move(self, from_row, from_col,to_row,to_col):
 
         """
-        Validates a move from one position to another on the chessboard.
+    Validates if a move from the origin position to the destination position is legal.
 
-        This function checks if the move is within the bounds of the board, if the origin
-        position is not empty, if the piece belongs to the current player, if the destination
-        position is valid, if the move is allowed for the piece, and if the path is not blocked.
+    Args:
+        from_row (int): The row index of the piece's origin position.
+        from_col (int): The column index of the piece's origin position.
+        to_row (int): The row index of the destination position.
+        to_col (int): The column index of the destination position.
 
-        Parameters:
-            from_row (int): The row index of the origin position.
-            from_col (int): The column index of the origin position.
-            to_row (int): The row index of the destination position.
-            to_col (int): The column index of the destination position.
-
-        Raises:
-            OutOfBoard: If the destination position is out of the bounds of the chessboard.
-            EmptyPosition: If the origin position is empty.
-            InvalidTurn: If the piece at the origin position does not belong to the current player.
-            InvalidDestination: If the destination position is occupied by a piece of the same color.
-            InvalidMove: If the move is not allowed for the piece.
-            InvalidPawnMovement: If a pawn is moving diagonally without capturing a piece.
-            PathBlocked: If the path to the destination is blocked by another piece.
-        """
+    Raises:
+        OutOfBoard: If the destination coordinates are out of the board's boundaries.
+        EmptyPosition: If there is no piece at the origin position.
+        InvalidTurn: If the piece at the origin does not belong to the current player.
+        InvalidDestination: If the destination square contains a piece of the same color.
+        InvalidMove: If the destination is not in the piece's valid possible positions.
+        InvalidPawnMovement: If a pawn tries to capture by moving forward instead of diagonally.
+        PathBlocked: If a non-Knight piece's path to the destination is blocked by another piece.
+    """
 
         if not (0 <= to_row < 8 and 0 <= to_col < 8):
             raise OutOfBoard()
@@ -93,6 +85,24 @@ class Chess:
                     raise PathBlocked() 
                 
     def movement(self, piece):
+        """
+    Determines the valid movement directions for a given chess piece.
+
+    Args:
+        piece (Piece): The chess piece for which to determine valid movement directions.
+
+    Returns:
+        tuple: A tuple containing:
+            - directions (list of tuple): A list of relative (row, col) movement directions.
+            - more_than_one_step (bool): A flag indicating whether the piece can move multiple steps.
+
+    Notes:
+        - Knights have an "L" shaped movement pattern and are not restricted by blocking pieces.
+        - Queens can move in any direction and for multiple steps.
+        - Kings can move one step in any direction.
+        - Bishops can move diagonally for multiple steps.
+        - Rooks and Pawns move forward and sideways (Pawns also move diagonally when capturing).
+    """
         if isinstance(piece, King) or isinstance(piece, Queen) or isinstance(piece, Knight):
             return  [(-2, 1), (-2, -1), (2, 1), (2, -1), (1, 2), (-1, 2), (1, -2), (-1, -2)] if isinstance(piece, Knight) else [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, 1), (-1, -1), (1, 1), (1, -1)], True if isinstance(piece, Queen) else False 
         elif isinstance(piece, Bishop):

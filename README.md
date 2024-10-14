@@ -25,12 +25,13 @@ This project is prepared to be executed via Docker. Below are the steps for its 
 
 - Prerequisites
 
-- Ensure you have Docker installed on your system. You can refer to the official [Docker Installation Guide](https://docs.docker.com/get-docker/).
+    - Ensure you have Docker installed on your system. You can refer to the official [Docker Installation Guide](https://docs.docker.com/get-docker/).
 
 - Cloning the Repository
 
     - Clone the repository to your local machine using the following command:
-    git clone https://github.com/your-username/ajedrez-2024-vickytorresburgos cd ajedrez-2024-vickytorresburgos
+    git clone https://github.com/your-username/ajedrez-2024-vickytorresburgos 
+    cd ajedrez-2024-vickytorresburgos
 
 
 # Circle CI

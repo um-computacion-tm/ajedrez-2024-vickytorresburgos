@@ -1,5 +1,4 @@
 import unittest
-
 from game.board import Board
 from game.knight import Knight
 

@@ -183,19 +183,19 @@ class TestChess(unittest.TestCase):
         expected_positions = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, 1), (-1, -1), (1, 1), (1, -1)]
         positions, more_than_one_step = self.chess.movement(self.queen)
         self.assertEqual(positions, expected_positions)
-        self.assertEqual(more_than_one_step, True)  # La reina se puede mover infinitamente en cualquier dirección
+        self.assertEqual(more_than_one_step, True)  
 
     def test_knight_movement(self):
         expected_positions = [(-2, 1), (-2, -1), (2, 1), (2, -1), (1, 2), (-1, 2), (1, -2), (-1, -2)]
         positions, more_than_one_step = self.chess.movement(self.knight)
         self.assertEqual(positions, expected_positions)
-        self.assertEqual(more_than_one_step, False)  # El caballo tiene un rango de movimiento fijo, no infinito
+        self.assertEqual(more_than_one_step, False)  
 
     def test_bishop_movement(self):
         expected_positions = [(-1, 1), (-1, -1), (1, 1), (1, -1)]
         positions, more_than_one_step = self.chess.movement(self.bishop)
         self.assertEqual(positions, expected_positions)
-        self.assertEqual(more_than_one_step, True)  # El alfil se puede mover infinitamente en diagonal
+        self.assertEqual(more_than_one_step, True)  
 
 if __name__ == "__main__":
     unittest.main()

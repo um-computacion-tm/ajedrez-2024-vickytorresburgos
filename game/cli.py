@@ -1,6 +1,5 @@
 from game.chess import Chess
 from game.exceptions import EmptyPosition, InvalidDestination, InvalidMove, InvalidPawnMovement, InvalidTurn, OutOfBoard, PathBlocked
-# from colorama import Fore
 
 def main():
 
@@ -22,9 +21,6 @@ def main():
         print(f"Score Player 2: {chess.get_player(1).score}") 
         play(chess)
     
-    # le tiene que preguntar en cada ronda al jugador si quiere seguir jugando? 
-    # ver puntuacion
-
 def play(chess):
 
     """

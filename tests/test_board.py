@@ -84,10 +84,5 @@ class TestBoard(unittest.TestCase):
         self.assertIsNotNone(placed_piece)
         self.assertEqual(placed_piece, piece)
 
-    # def test_place_piece_out_of_bounds(self):
-    #     piece = King("White", self.board, 0)
-    #     with self.assertRaises(OutOfBoard):
-    #         self.board.place_piece(8, 0, piece)
-        
 if __name__ == "__main__":
     unittest.main()
