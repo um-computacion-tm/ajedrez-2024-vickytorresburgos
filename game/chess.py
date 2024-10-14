@@ -95,16 +95,12 @@ class Chess:
     def movement(self, piece):
         if isinstance(piece, Knight):
             return [(-2, 1), (-2, -1), (2, 1), (2, -1), (1, 2), (-1, 2), (1, -2), (-1, -2)], False
-        elif isinstance(piece, King):
-            return [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, 1), (-1, -1), (1, 1), (1, -1)], False
-        elif isinstance(piece, Queen):
-            return [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, 1), (-1, -1), (1, 1), (1, -1)], True
+        elif isinstance(piece, King) or isinstance(piece, Queen):
+            return [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, 1), (-1, -1), (1, 1), (1, -1)], False if isinstance(piece, King) else False
         elif isinstance(piece, Bishop):
             return [(-1, 1), (-1, -1), (1, 1), (1, -1)], True
-        elif isinstance(piece, Rook):
-            return [(-1, 0), (1, 0), (0, -1), (0, 1)], True
         else:
-            return [], True
+            return [(-1, 0), (1, 0), (0, -1), (0, 1)], True
 
     def get_player(self,index): 
 
