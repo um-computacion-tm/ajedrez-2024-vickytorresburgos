@@ -3,6 +3,10 @@ from game.exceptions import EmptyPosition, InvalidDestination, InvalidMove, Inva
 from game.knight import Knight
 from game.pawn import Pawn
 from game.player import Player
+from game.king import King
+from game.rook import Rook
+from game.queen import Queen
+from game.bishop import Bishop
 
 class Chess:
     def __init__(self):
@@ -71,7 +75,8 @@ class Chess:
         if destination_piece and destination_piece.get_color() == self.actual_player.color: 
             raise InvalidDestination() 
         
-        possible_positions = origin_piece.possible_positions(from_row, from_col) 
+        directions, more_than_one_step = self.movement(origin_piece)
+        possible_positions = origin_piece.possible_positions(from_row, from_col, directions, more_than_one_step) 
         if (to_row, to_col) not in possible_positions:
             raise InvalidMove() 
         
@@ -87,6 +92,20 @@ class Chess:
                 if self.__board__.get_piece(intermediate_row, intermediate_col) is not None: 
                     raise PathBlocked() 
                 
+    def movement(self, piece):
+        if isinstance(piece, Knight):
+            return [(-2, 1), (-2, -1), (2, 1), (2, -1), (1, 2), (-1, 2), (1, -2), (-1, -2)], False
+        elif isinstance(piece, King):
+            return [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, 1), (-1, -1), (1, 1), (1, -1)], False
+        elif isinstance(piece, Queen):
+            return [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, 1), (-1, -1), (1, 1), (1, -1)], True
+        elif isinstance(piece, Bishop):
+            return [(-1, 1), (-1, -1), (1, 1), (1, -1)], True
+        elif isinstance(piece, Rook):
+            return [(-1, 0), (1, 0), (0, -1), (0, 1)], True
+        else:
+            return [], True
+
     def get_player(self,index): 
 
         """
