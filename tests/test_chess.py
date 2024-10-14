@@ -1,7 +1,11 @@
 import unittest
 from unittest.mock import patch, MagicMock
+from game.bishop import Bishop
+from game.king import King
+from game.knight import Knight
 from game.piece import Piece
 from game.pawn import Pawn
+from game.queen import Queen
 from game.rook import Rook
 from game.board import Board
 from game.chess import Chess
@@ -11,6 +15,11 @@ from game.player import Player
 class TestChess(unittest.TestCase):
     def setUp(self):
         self.chess = Chess()
+        self.board = Board()
+        self.king = King("White", self.board, 1 )
+        self.queen = Queen("White", self.board, 9)
+        self.knight = Knight("White", self.board, 3)
+        self.bishop = Bishop("White", self.board, 3)
 
     def test_initialization(self):
         self.assertIsInstance(self.chess.__board__, Board)
@@ -55,15 +64,25 @@ class TestChess(unittest.TestCase):
         self.assertEqual(black_player.color, "Black")
 
     def test_show_board_initial_state(self):
-        expected_board_str = (
-            "♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ \n"
-            "♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟ \n"
-            "                \n"
-            "                \n"
-            "                \n"
-            "                \n"
-            "♙ ♙ ♙ ♙ ♙ ♙ ♙ ♙ \n"
-            "♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖ \n"
+        expected_board_str = ( 
+            "    1   2   3   4   5   6   7   8\n"
+            "  ┌───┬───┬───┬───┬───┬───┬───┬───┐\n"
+            "1 │ ♜ │ ♞ │ ♝ │ ♛ │ ♚ │ ♝ │ ♞ │ ♜ │ \n" 
+            "  ├───┼───┼───┼───┼───┼───┼───┼───┤\n"
+            "2 │ ♟ │ ♟ │ ♟ │ ♟ │ ♟ │ ♟ │ ♟ │ ♟ │ \n" 
+            "  ├───┼───┼───┼───┼───┼───┼───┼───┤\n"
+            "3 │   │   │   │   │   │   │   │   │ \n"
+            "  ├───┼───┼───┼───┼───┼───┼───┼───┤\n"
+            "4 │   │   │   │   │   │   │   │   │ \n" 
+            "  ├───┼───┼───┼───┼───┼───┼───┼───┤\n"
+            "5 │   │   │   │   │   │   │   │   │ \n"
+            "  ├───┼───┼───┼───┼───┼───┼───┼───┤\n"
+            "6 │   │   │   │   │   │   │   │   │ \n"
+            "  ├───┼───┼───┼───┼───┼───┼───┼───┤\n"
+            "7 │ ♙ │ ♙ │ ♙ │ ♙ │ ♙ │ ♙ │ ♙ │ ♙ │ \n" 
+            "  ├───┼───┼───┼───┼───┼───┼───┼───┤\n"
+            "8 │ ♖ │ ♘ │ ♗ │ ♕ │ ♔ │ ♗ │ ♘ │ ♖ │ \n" 
+            "  └───┴───┴───┴───┴───┴───┴───┴───┘"
         )
         self.assertEqual(self.chess.show_board(), expected_board_str)
 
@@ -153,6 +172,30 @@ class TestChess(unittest.TestCase):
         self.chess.move(0, 0, 1, 1)
         self.assertEqual(self.chess.get_player(1).score, 1)
         self.assertEqual(self.chess.get_player(0).pieces, 15)
-    
+
+    def test_king_movement(self):
+        expected_positions = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, 1), (-1, -1), (1, 1), (1, -1)]
+        positions, more_than_one_step = self.chess.movement(self.king)
+        self.assertEqual(positions, expected_positions)
+        self.assertEqual(more_than_one_step, False)
+
+    def test_queen_movement(self):
+        expected_positions = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, 1), (-1, -1), (1, 1), (1, -1)]
+        positions, more_than_one_step = self.chess.movement(self.queen)
+        self.assertEqual(positions, expected_positions)
+        self.assertEqual(more_than_one_step, True)  
+
+    def test_knight_movement(self):
+        expected_positions = [(-2, 1), (-2, -1), (2, 1), (2, -1), (1, 2), (-1, 2), (1, -2), (-1, -2)]
+        positions, more_than_one_step = self.chess.movement(self.knight)
+        self.assertEqual(positions, expected_positions)
+        self.assertEqual(more_than_one_step, False)  
+
+    def test_bishop_movement(self):
+        expected_positions = [(-1, 1), (-1, -1), (1, 1), (1, -1)]
+        positions, more_than_one_step = self.chess.movement(self.bishop)
+        self.assertEqual(positions, expected_positions)
+        self.assertEqual(more_than_one_step, True)  
+
 if __name__ == "__main__":
     unittest.main()

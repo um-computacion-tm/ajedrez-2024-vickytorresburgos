@@ -18,12 +18,12 @@ class TestKing(unittest.TestCase):
         self.assertEqual(self.black_king.black_str(), "♚")
         
     def test_king_possible_positions(self):
-        possibles = self.white_king.possible_positions(1, 0)
+        possibles = self.white_king.possible_positions(1, 0, [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, 1), (-1, -1), (1, 1), (1, -1)], False)
         expected = [(0, 0), (2, 0), (1, 1), (0, 1), (2, 1)]
         self.assertEqual(possibles, expected)
 
     def test_king_possible_positions(self):
-        possibles = self.black_king.possible_positions(6, 0)
+        possibles = self.black_king.possible_positions(6, 0, [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, 1), (-1, -1), (1, 1), (1, -1)], False)
         expected = [(5, 0), (7, 0), (6, 1), (5, 1), (7, 1)]
         self.assertEqual(possibles, expected)
     
