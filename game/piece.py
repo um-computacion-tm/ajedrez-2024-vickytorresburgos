@@ -1,5 +1,5 @@
 class Piece:
-    def __init__(self, color, board, score, directions):
+    def __init__(self, color, board, score):
         """
         Initializes a new piece.
 
@@ -11,8 +11,7 @@ class Piece:
         self.__color__ = color
         self.__board__ = board
         self.__score__ = score
-        self.__directions__ = directions
-
+    
     def white_str(self):
         """
         Returns the Unicode character for a white piece.
@@ -61,12 +60,8 @@ class Piece:
         """
         return self.__score__
     
-    def get_directions(self):
-        return []
-
-    def possible_positions(self, row, col, more_than_one_step):
+    def possible_positions(self, row, col, directions, more_than_one_step):
         possibles = []
-        directions = self.get_directions()
         for dr, dc in directions:
             next_row, next_col = row + dr, col + dc
             if more_than_one_step: 
