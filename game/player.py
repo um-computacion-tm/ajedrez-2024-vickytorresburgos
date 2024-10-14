@@ -24,3 +24,12 @@ class Player:
         Removes one piece from the player's total pieces.
         """
         self.pieces -= 1
+
+    def has_pieces(self):
+        """
+        Checks if the player still has pieces remaining.
+
+        Returns:
+            bool: True if the player has at least one piece left, False otherwise.
+        """
+        return self.pieces > 0

@@ -21,6 +21,19 @@ def main():
         print(f"Score Player 2: {chess.get_player(1).score}") 
         play(chess)
     
+        if not chess.get_player(0).has_pieces():
+            print("Player 1 (White) has no pieces left! Player 2 (Black) wins!")
+            break
+        elif not chess.get_player(1).has_pieces():
+            print("Player 2 (Black) has no pieces left! Player 1 (White) wins!")
+            break
+
+        if ask_to_finish(chess):
+            print("The game ended by mutual agreement!")
+            break
+
+
+
 def play(chess):
 
     """
@@ -47,6 +60,17 @@ def play(chess):
     except (OutOfBoard, EmptyPosition, InvalidDestination, InvalidTurn, InvalidMove, PathBlocked, InvalidPawnMovement) as e:
         print(e.message) 
         print('Try again.')
+
+def ask_to_finish(chess):
+    """
+    Asks both players if they want to finish the game.
+
+    Returns True only if both players agree to finish the game.
+    """
+    player_1_response = input("Player 1 (White), do you want to end the game? (yes/no): ").strip().lower()
+    player_2_response = input("Player 2 (Black), do you want to end the game? (yes/no): ").strip().lower()
+
+    return player_1_response == "yes" and player_2_response == "yes"
 
 if __name__ == '__main__':
     main()
