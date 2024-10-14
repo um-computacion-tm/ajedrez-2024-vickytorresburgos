@@ -93,10 +93,8 @@ class Chess:
                     raise PathBlocked() 
                 
     def movement(self, piece):
-        if isinstance(piece, Knight):
-            return [(-2, 1), (-2, -1), (2, 1), (2, -1), (1, 2), (-1, 2), (1, -2), (-1, -2)], False
-        elif isinstance(piece, King) or isinstance(piece, Queen):
-            return [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, 1), (-1, -1), (1, 1), (1, -1)], False if isinstance(piece, King) else False
+        if isinstance(piece, King) or isinstance(piece, Queen) or isinstance(piece, Knight):
+            return  [(-2, 1), (-2, -1), (2, 1), (2, -1), (1, 2), (-1, 2), (1, -2), (-1, -2)] if isinstance(piece, Knight) else [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, 1), (-1, -1), (1, 1), (1, -1)], True if isinstance(piece, Queen) else False
         elif isinstance(piece, Bishop):
             return [(-1, 1), (-1, -1), (1, 1), (1, -1)], True
         else:
