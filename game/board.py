@@ -57,16 +57,20 @@ class Board:
         Returns:
             str: A string representing the chessboard.
         """
-        board_str = ''
-        for row in self.__positions__:
-            row_str = ''
-            for piece in row:
+        board_str = "    1   2   3   4   5   6   7   8\n  ┌───┬───┬───┬───┬───┬───┬───┬───┐\n"
+        for i in range(8):
+            row_str = str(i + 1) + ' │ '
+            for piece in self.__positions__[i]:
                 if piece is None:
-                    row_str += '  ' 
+                    row_str += '  │ ' 
                 else:
-                    row_str += str(piece) + ' ' 
+                    row_str += str(piece) + ' │ ' 
             board_str += row_str + '\n'
-        return board_str  
+            if i != 7:
+                board_str += "  ├───┼───┼───┼───┼───┼───┼───┼───┤\n"
+            else:
+                board_str += "  └───┴───┴───┴───┴───┴───┴───┴───┘"
+        return board_str
     
     def get_piece(self, row, col): #codigo duplicado
         

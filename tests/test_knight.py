@@ -18,12 +18,12 @@ class TestKnight(unittest.TestCase):
         self.assertEqual(self.black_knight.black_str(), "♞")
 
     def test_white_knight_possible_positions(self):
-        possibles = self.white_knight.possible_positions(1, 0)
+        possibles = self.white_knight.possible_positions(1, 0, [(-2, 1), (-2, -1), (2, 1), (2, -1), (1, 2), (-1, 2), (1, -2), (-1, -2)], False)
         expected = [(3, 1), (2, 2), (0 ,2)]
         self.assertEqual(possibles, expected)
 
     def test_black_knight_possible_positions(self):
-        possibles = self.black_knight.possible_positions(6, 0)
+        possibles = self.black_knight.possible_positions(6, 0, [(-2, 1), (-2, -1), (2, 1), (2, -1), (1, 2), (-1, 2), (1, -2), (-1, -2)], False)
         expected = [(4, 1), (7, 2), (5, 2)]
         self.assertEqual(possibles, expected)
 

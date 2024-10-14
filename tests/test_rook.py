@@ -16,7 +16,7 @@ class TestRookMovements(unittest.TestCase):
 
     def test_possible_positions_white_rook(self):
         self.board.place_piece(4, 4, self.white_rook)
-        possibles = self.white_rook.possible_positions(4, 4)
+        possibles = self.white_rook.possible_positions(4, 4, [(-1, 0), (1, 0), (0, -1), (0, 1)], True)
         expected = [
             (3, 4), (2, 4), (1, 4), (0, 4),
             (5, 4), (6, 4), (7, 4),
@@ -28,7 +28,7 @@ class TestRookMovements(unittest.TestCase):
             # Test for a white rook at the edge of the board
     def test_white_rook_board_edge(self):
         self.board.place_piece(0, 0, self.white_rook)
-        possibles = self.white_rook.possible_positions(0, 0)
+        possibles = self.white_rook.possible_positions(0, 0, [(-1, 0), (1, 0), (0, -1), (0, 1)], True)
         expected = [
             (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
             (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (0, 7)
@@ -37,7 +37,7 @@ class TestRookMovements(unittest.TestCase):
 
     def test_possible_positions_black_rook(self):
         self.board.place_piece(4, 4, self.black_rook)
-        possibles = self.black_rook.possible_positions(4, 4)
+        possibles = self.black_rook.possible_positions(4, 4, [(-1, 0), (1, 0), (0, -1), (0, 1)], True)
         expected = [
             (3, 4), (2, 4), (1, 4), (0, 4),
             (5, 4), (6, 4), (7, 4),
@@ -48,7 +48,7 @@ class TestRookMovements(unittest.TestCase):
 
     def test_black_rook_board_edge(self):
         self.board.place_piece(0, 0, self.black_rook)
-        possibles = self.black_rook.possible_positions(0, 0)
+        possibles = self.black_rook.possible_positions(0, 0, [(-1, 0), (1, 0), (0, -1), (0, 1)], True)
         expected = [
             (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
             (0, 1), (0, 2)]
