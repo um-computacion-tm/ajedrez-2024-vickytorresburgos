@@ -42,7 +42,8 @@ class Piece:
         else:
             return self.black_str()
 
-    def get_color(self):
+    @property
+    def color(self):
         """
         Returns the color of the piece.
 
@@ -50,8 +51,9 @@ class Piece:
             str: The color of the piece ("White" or "Black").
         """
         return self.__color__
-
-    def get_score(self):
+    
+    @property
+    def score(self):
         """
         Returns the score value of the piece.
 

@@ -42,7 +42,7 @@ class Pawn(Piece):
         for dc in [-1, 1]:
             if 0 <= row + direction < 8 and 0 <= col + dc < 8:
                 piece = self.__board__.get_piece(row + direction, col + dc)
-                if piece and piece.get_color() != self.get_color():
+                if piece and piece.color != self.color:
                     possibles.append((row + direction, col + dc)) 
         return possibles
 

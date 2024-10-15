@@ -15,10 +15,10 @@ class Chess:
 
         This constructor sets up the players, the current player, and the chessboard.
         """
-        self.players = [Player("White"), Player("Black")]
-        self.actual_player = self.players[0]
+        self.__players__ = [Player("White",16), Player("Black",16)]
+        self.__actual_player__ = self.__players__[0]
         self.__board__ = Board()
-        self.agreed_draw = False
+        self.__agreed_draw__ = False
 
     def is_playing(self): 
         """
@@ -30,11 +30,11 @@ class Chess:
         Returns:
             bool: True if the game is still in progress, False otherwise.
         """
-        for player in self.players:
+        for player in self.__players__:
             if not player.has_pieces():
                 print(f"{player.color} has no pieces left. Game Over!")
                 return False
-        if self.agreed_draw:
+        if self.__agreed_draw__:
             print("Game ended by mutual agreement.")
             return False
         return True
@@ -43,7 +43,7 @@ class Chess:
             """
             Allows players to end the game by mutual agreement.
             """
-            self.agreed_draw = True
+            self.__agreed_draw__ = True
 
     def validate_move(self, from_row, from_col,to_row,to_col):
 
@@ -74,12 +74,12 @@ class Chess:
         if not origin_piece: 
             raise EmptyPosition()
         
-        if not origin_piece.get_color() == self.actual_player.color: 
+        if not origin_piece.color == self.__actual_player__.color: 
             raise InvalidTurn()
 
         destination_piece = self.__board__.get_piece(to_row,to_col) 
 
-        if destination_piece and destination_piece.get_color() == self.actual_player.color: 
+        if destination_piece and destination_piece.color == self.__actual_player__.color: 
             raise InvalidDestination() 
         
         directions, more_than_one_step = self.movement(origin_piece)
@@ -137,9 +137,9 @@ class Chess:
             Player: The player at the specified index.
         """
 
-        return self.players[index]     
+        return self.__players__[index]     
     
-    def move(self,from_row,from_col, to_row, to_col):
+    def play(self,from_row,from_col, to_row, to_col):
 
         """
         Moves a piece from one position to another on the chessboard.
@@ -159,15 +159,13 @@ class Chess:
         self.__board__.move(from_row, from_col, to_row, to_col) 
 
         if destination: 
-            self.actual_player.sum_score(destination.get_score()) 
-            if self.actual_player == self.get_player(1): 
+            self.__actual_player__.sum_score(destination.score) 
+            if self.__actual_player__ == self.get_player(1): 
                 self.get_player(0).remove_piece() 
             else: 
                 self.get_player(1).remove_piece() 
-
-        if not self.actual_player.has_pieces():
-            print(f"{self.actual_player.color} has no pieces left. Game Over!")
-        
+        if not self.__actual_player__.has_pieces():
+            print(f"{self.__actual_player__.color} has no pieces left. Game Over!")
         self.change_turn() 
         
     def show_board(self):
@@ -189,8 +187,11 @@ class Chess:
         Returns:
             str: The color of the current player after changing the turn.
         """
-        if self.actual_player == self.players[0]:
-            self.actual_player = self.players[1]
+        if self.__actual_player__ == self.__players__[0]:
+            self.__actual_player__ = self.__players__[1]
         else:
-            self.actual_player = self.players[0]
-        return self.actual_player.color 
+            self.__actual_player__ = self.__players__[0]
+        return self.__actual_player__.color 
+    
+    def finish(self, answ1, answ2):
+        return answ1 == "yes" and answ2 == "yes"
