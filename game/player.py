@@ -1,14 +1,18 @@
 class Player:
-    def __init__(self, color):
+    def __init__(self, color, pieces=16):
         """
         Initializes a new player.
 
         Parameters:
             color (str): The color of the player ("White" or "Black").
         """
-        self.color = color
-        self.pieces = 16
-        self.score = 0
+        self.__color__ = color
+        self.__pieces__ = pieces
+        self.__score__ = 0
+   
+    @property
+    def color(self):
+        return self.__color__
 
     def sum_score(self, score):
         """
@@ -17,13 +21,13 @@ class Player:
         Parameters:
             score (int): The score to add.
         """
-        self.score += score
+        self.__score__ += score
 
     def remove_piece(self):
         """
         Removes one piece from the player's total pieces.
         """
-        self.pieces -= 1
+        self.__pieces__ -= 1
 
     def has_pieces(self):
         """
@@ -32,4 +36,12 @@ class Player:
         Returns:
             bool: True if the player has at least one piece left, False otherwise.
         """
-        return self.pieces > 0
+        return self.__pieces__ > 0
+    
+    @property
+    def piece(self):
+        return self.__pieces__
+    
+    @property
+    def score(self):
+        return self.__score__

@@ -84,18 +84,18 @@ class TestPawn(unittest.TestCase):
         expected = [(5, 4)]
         self.assertEqual(possibles, expected)
 
-    @patch.object(Pawn, 'get_color', return_value='White')
+    @patch.object(Pawn, 'color', return_value='White')
     @patch.object(Board, 'get_piece', return_value=Piece("Black", None, 1))
     
-    def test_possible_positions_diagonal_capture_white_pawn(self, mock_get_piece, mock_get_color):
+    def test_possible_positions_diagonal_capture_white_pawn(self, mock_get_piece, mock_color):
         self.board.place_piece(3, 3, self.white_pawn)
         possibles = self.white_pawn.possible_positions(3, 3, [], True)
         expected = [(2, 3), (2, 2), (2, 4)]
         self.assertEqual(possibles, expected)
 
-    @patch.object(Pawn, 'get_color', return_value='Black')
+    @patch.object(Pawn, 'color', return_value='Black')
     @patch.object(Board, 'get_piece', return_value=Piece("White", None, 1))
-    def test_possible_positions_diagonal_capture_black_pawn(self, mock_get_piece, mock_get_color):
+    def test_possible_positions_diagonal_capture_black_pawn(self, mock_get_piece, mock_color):
         self.board.place_piece(4, 4, self.black_pawn)
         possibles = self.black_pawn.possible_positions(4, 4, [], True)
         expected = [(5, 4), (5, 3), (5, 5)]

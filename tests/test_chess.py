@@ -23,12 +23,12 @@ class TestChess(unittest.TestCase):
 
     def test_initialization(self):
         self.assertIsInstance(self.chess.__board__, Board)
-        self.assertEqual(len(self.chess.players), 2)
-        self.assertIsInstance(self.chess.players[0], Player)
-        self.assertIsInstance(self.chess.players[1], Player)
-        self.assertEqual(self.chess.players[0].color, "White")
-        self.assertEqual(self.chess.players[1].color, "Black")
-        self.assertEqual(self.chess.actual_player, self.chess.players[0])
+        self.assertEqual(len(self.chess.__players__), 2)
+        self.assertIsInstance(self.chess.__players__[0], Player)
+        self.assertIsInstance(self.chess.__players__[1], Player)
+        self.assertEqual(self.chess.__players__[0].color, "White")
+        self.assertEqual(self.chess.__players__[1].color, "Black")
+        self.assertEqual(self.chess.__actual_player__, self.chess.__players__[0])
 
     def test_is_playing(self):
         self.assertTrue(self.chess.is_playing())
@@ -88,20 +88,20 @@ class TestChess(unittest.TestCase):
 
     def test_change_turn(self):
         self.chess.change_turn()
-        self.assertEqual(self.chess.actual_player.color, "Black")
+        self.assertEqual(self.chess.__actual_player__.color, "Black")
         self.chess.change_turn()
-        self.assertEqual(self.chess.actual_player.color, "White")
+        self.assertEqual(self.chess.__actual_player__.color, "White")
 
     def test_change_turn_white_to_black(self):
-        self.assertEqual(self.chess.actual_player.color, "White")
+        self.assertEqual(self.chess.__actual_player__.color, "White")
         self.chess.change_turn()
-        self.assertEqual(self.chess.actual_player.color, "Black")
+        self.assertEqual(self.chess.__actual_player__.color, "Black")
 
     def test_change_turn_black_to_white(self):
         self.chess.change_turn()
-        self.assertEqual(self.chess.actual_player.color, "Black")
+        self.assertEqual(self.chess.__actual_player__.color, "Black")
         self.chess.change_turn()
-        self.assertEqual(self.chess.actual_player.color, "White")
+        self.assertEqual(self.chess.__actual_player__.color, "White")
 
     @patch.object(Board, 'get_piece', return_value=None)
     def test_validate_move_empty_position(self, mock_get_piece):
@@ -148,7 +148,7 @@ class TestChess(unittest.TestCase):
     def test_valid_move(self):
         chess = Chess()
         board = Board(for_test = False)
-        chess.move(6, 0, 4, 0)
+        chess.play(6, 0, 4, 0)
         piece = chess.__board__.get_piece(4,0)
         self.assertIsInstance(piece,Pawn)
 
@@ -158,9 +158,9 @@ class TestChess(unittest.TestCase):
         board = Board(for_test = True)
         self.chess.__board__.place_piece(0,0,Pawn('White', board, 1))
         self.chess.__board__.place_piece(1,1,Pawn('Black', board, 1))
-        self.chess.move(0, 0, 1, 1)
+        self.chess.play(0, 0, 1, 1)
         self.assertEqual(self.chess.get_player(0).score, 1)
-        self.assertEqual(self.chess.get_player(1).pieces, 15)
+        self.assertEqual(self.chess.get_player(1).piece, 15)
 
     @patch.object(Chess, 'validate_move', return_value = [])
     def test_remove_piece(self, mock_validate_move):
@@ -169,9 +169,9 @@ class TestChess(unittest.TestCase):
         self.chess.__board__.place_piece(0,0,Pawn('Black', board, 1))
         self.chess.__board__.place_piece(1,1,Pawn('White', board, 1))
         self.chess.change_turn()
-        self.chess.move(0, 0, 1, 1)
+        self.chess.play(0, 0, 1, 1)
         self.assertEqual(self.chess.get_player(1).score, 1)
-        self.assertEqual(self.chess.get_player(0).pieces, 15)
+        self.assertEqual(self.chess.get_player(0).piece, 15)
 
     def test_king_movement(self):
         expected_positions = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, 1), (-1, -1), (1, 1), (1, -1)]
@@ -201,7 +201,7 @@ class TestChess(unittest.TestCase):
     @patch('builtins.print')
     def test_is_playing_with_pieces(self, mock_print, mock_has_pieces):
         chess = Chess()
-        chess.agreed_draw = False  
+        chess.__agreed_draw__ = False  
         result = chess.is_playing()
         self.assertTrue(result)
 
@@ -209,22 +209,22 @@ class TestChess(unittest.TestCase):
     @patch('builtins.print')
     def test_is_playing_player_no_pieces(self, mock_print, mock_has_pieces):
         chess = Chess()
-        chess.agreed_draw = False 
+        chess.__agreed_draw__ = False 
         result = chess.is_playing()
         self.assertFalse(result)
 
     @patch.object(Player, 'has_pieces', return_value=True)
     @patch('builtins.print')
-    def test_is_playing_with_agreed_draw(self,mock_print, mock_has_pieces):
+    def test_is_playing_with___agreed_draw__(self,mock_print, mock_has_pieces):
         chess = Chess()
-        chess.agreed_draw = True  
+        chess.__agreed_draw__ = True  
         result = chess.is_playing()
         self.assertFalse(result)
 
     def test_end_game_by_agreement(self):
         chess = Chess()
         chess.end_game_by_agreement()
-        self.assertTrue(chess.agreed_draw)
+        self.assertTrue(chess.__agreed_draw__)
 
 if __name__ == "__main__":
     unittest.main()
